@@ -131,6 +131,7 @@ void inicializarTerritorios(Territorio* mapa) {
         }
         printf("\n");
     }
+    printf("Territórios cadastrados com sucesso!\nIniciando jogo...\n");
 }
 
 // liberarMemoria():
@@ -153,11 +154,13 @@ void exibirMenuPrincipal() {
 // Mostra o estado atual de todos os territórios no mapa, formatado como uma tabela.
 // Usa 'const' para garantir que a função apenas leia os dados do mapa, sem modificá-los.
 void exibirMapa(const Territorio* mapa) {
-    printf("Território | Cor | Tropas\n");
-    for (unsigned char i = 0; i < MAPA_SIZE; i++) exibirTerritorio(mapa[i]);
+    printf("Id | Território | Cor | Tropas\n");
+    for (unsigned char i = 0; i < MAPA_SIZE; i++) {
+        printf("%d | ", i + 1);
+        exibirTerritorio(mapa[i]);
+    }
     printf("\n");
 }
-
 
 // exibirMissao():
 // Exibe a descrição da missão atual do jogador com base no ID da missão sorteada.
@@ -170,7 +173,15 @@ void exibirMapa(const Territorio* mapa) {
 // Executa a lógica de uma batalha entre dois territórios.
 // Realiza validações, rola os dados, compara os resultados e atualiza o número de tropas.
 // Se um território for conquistado, atualiza seu dono e move uma tropa.
-
+void simularAtaque(Territorio *atacante, Territorio *defensor) {
+    if ((rand() & 1) != 0) {
+        defensor->tropas = 0;
+        atacante->tropas -= defensor->tropas;
+    } else {
+        atacante->tropas = 0;
+        defensor->tropas -= atacante->tropas;
+    }
+}
 
 // sortearMissao():
 // Sorteia e retorna um ID de missão aleatório para o jogador.
